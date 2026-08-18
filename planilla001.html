@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mis Finanzas Dinámicas - Dark Mode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* ─── PALETA DARK MODE ─── */
+            --bg-app: #121418;
+            --surface: #1C2127;
+            --surface-elevated: #2A3038;
+            --borde: #3A424C;
+            
+            --texto-principal: #FFFFFF;
+            --texto-secundario: #A0ABC0;
+            --verde-primario: #38A169; /* Verde un poco más vibrante para fondos oscuros */
+            
+            /* Colores de Estados (Adaptados para Dark Mode) */
+            --bg-pagado: #1C4532; --txt-pagado: #68D391;
+            --bg-guardado: #1A365D; --txt-guardado: #63B3ED;
+            --bg-pendiente: #5C1A06; --txt-pendiente: #FC8181;
+            
+            /* Colores de Categorías (Adaptados para Dark Mode) */
+            --tag-arriendo: #2A4365; --txt-arriendo: #90CDF4;
+            --tag-servicios: #744210; --txt-servicios: #FBD38D;
+            --tag-suscripcion: #44337A; --txt-suscripcion: #D6BCFA;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-app); color: var(--texto-principal); padding-bottom: 90px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px 14px; }
+
+        /* ─── FILTROS TIPO PÍLDORA ─── */
+        .filtros-wrap { background: var(--surface); padding: 16px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); margin-bottom: 20px; border: 1px solid var(--borde); }
+        .f-label { font-size: 0.7rem; font-weight: 700; color: var(--texto-secundario); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
+        .f-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+        .f-scroll::-webkit-scrollbar { display: none; }
+        .f-btn { background: var(--surface-elevated); border: 1px solid var(--borde); color: var(--texto-secundario); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+        .f-btn.active { background: var(--verde-primario); border-color: var(--verde-primario); color: #fff; }
+
+        /* ─── SELECTOR DE MESES ─── */
+        .meses-scroll { display: flex; gap: 12px; overflow-x: auto; margin-bottom: 20px; align-items: center; padding: 5px 0; }
+        .meses-scroll::-webkit-scrollbar { display: none; }
+        .mes-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--surface-elevated); color: var(--texto-secundario); border: 1px solid var(--borde); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: 0.3s; }
+        .mes-btn.active { background: #5d3b7d; color: #fff; border-color: #5d3b7d; box-shadow: 0 0 0 4px rgba(93, 59, 125, 0.3); }
+        .btn-calendario { margin-left: auto; background: var(--surface-elevated); border: 1px solid var(--borde); color: var(--texto-principal); padding: 8px 14px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* ─── SEPARADOR DE FECHA ─── */
+        .fecha-separador { font-size: 0.85rem; font-weight: 700; color: var(--texto-secundario); text-transform: uppercase; margin: 24px 0 12px 0; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+        .fecha-separador::after { content: ''; flex: 1; height: 1px; background: var(--borde); }
+
+        /* ─── TARJETAS DE TRANSACCIONES (Móvil) ─── */
+        .tx-card { background: var(--surface); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: grid; grid-template-columns: 40px 1fr auto; grid-template-areas: "icon date state" "icon title amount" "icon tag amount"; gap: 4px 12px; align-items: center; border: 1px solid var(--borde); cursor: pointer; transition: 0.2s; }
+        .tx-card:active { transform: scale(0.98); }
+        
+        .tx-icon { grid-area: icon; font-size: 1.5rem; text-align: center; background: var(--surface-elevated); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--borde); }
+        .tx-date { grid-area: date; font-size: 0.75rem; color: var(--texto-secundario); font-weight: 500; }
+        .tx-state { grid-area: state; justify-self: end; }
+        .tx-title { grid-area: title; font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--texto-principal); }
+        .tx-tag-wrap { grid-area: tag; margin-top: 2px; }
+        .tx-amount { grid-area: amount; font-size: 1.1rem; font-weight: 700; justify-self: end; }
+
+        /* Estados y Badges */
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.05); }
+        .badge-cat { text-transform: none; font-weight: 500; font-size: 0.75rem; }
+        
+        .st-pagado { background: var(--bg-pagado); color: var(--txt-pagado); }
+        .st-guardado { background: var(--bg-guardado); color: var(--txt-guardado); }
+        .st-pendiente { background: var(--bg-pendiente); color: var(--txt-pendiente); }
+        
+        .cat-arriendo { background: var(--tag-arriendo); color: var(--txt-arriendo); }
+        .cat-servicios { background: var(--tag-servicios); color: var(--txt-servicios); }
+        .cat-suscripcion { background: var(--tag-suscripcion); color: var(--txt-suscripcion); }
+
+        .monto-negativo { color: var(--txt-pendiente); }
+        .monto-positivo { color: var(--txt-pagado); }
+
+        /* ─── FAB (Botón Flotante) ─── */
+        .fab { position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: var(--verde-primario); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 14px rgba(56, 161, 105, 0.4); border: none; cursor: pointer; z-index: 900; transition: 0.2s; }
+        .fab:active { transform: scale(0.9); }
+
+        /* ─── MODALES ─── */
+        .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 1000; opacity: 0; pointer-events: none; transition: 0.3s; display: flex; align-items: flex-end; justify-content: center; backdrop-filter: blur(4px); }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .modal { background: var(--surface); color: var(--texto-principal); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 24px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; gap: 16px; border-top: 1px solid var(--borde); }
+        .overlay.active .modal { transform: translateY(0); }
+        
+        .mod-handle { width: 40px; height: 5px; background: #4A5568; border-radius: 5px; margin: 0 auto 10px auto; }
+        
+        /* Modal Info */
+        .mod-header { display: flex; align-items: center; gap: 16px; }
+        .mod-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--surface-elevated); font-size: 2rem; display: flex; align-items: center; justify-content: center; border: 1px solid var(--borde); }
+        .mod-title { font-size: 1.2rem; font-weight: 700; color: var(--texto-principal); }
+        .mod-monto { font-size: 1.4rem; font-weight: 800; margin-left: auto; }
+        
+        .mod-box { background: var(--surface-elevated); border-radius: 12px; padding: 16px; font-size: 0.85rem; color: var(--texto-secundario); display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--borde); }
+        .mod-box strong { color: #E2E8F0; }
+        .mod-url a { color: #63B3ED; text-decoration: none; word-break: break-all; }
+        
+        .mod-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .btn-act { padding: 12px; border: none; border-radius: 10px; font-weight: 600; font-size: 0.8rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s; }
+        .btn-act:active { transform: scale(0.95); }
+        
+        /* Mismos colores de los badges para los botones de acción */
+        .btn-act.pag { background: var(--bg-pagado); color: var(--txt-pagado); border: 1px solid #276749; } 
+        .btn-act.pen { background: var(--bg-pendiente); color: var(--txt-pendiente); border: 1px solid #742A2A; } 
+        .btn-act.gua { background: var(--bg-guardado); color: var(--txt-guardado); border: 1px solid #2A4365; } 
+
+        /* Formularios en Modal Dark */
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-control { background: var(--surface-elevated); border: 1px solid var(--borde); color: var(--texto-principal); padding: 12px 16px; border-radius: 10px; font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; transition: 0.2s; }
+        .form-control:focus { border-color: var(--verde-primario); }
+        
+        /* Segmented Control (Ingreso/Gasto) */
+        .segment-ctrl { display: flex; background: var(--surface-elevated); border-radius: 10px; padding: 4px; border: 1px solid var(--borde); }
+        .segment-btn { flex: 1; padding: 10px; text-align: center; font-weight: 600; font-size: 0.9rem; color: var(--texto-secundario); border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .segment-btn.active.gasto { background: var(--bg-pendiente); color: var(--txt-pendiente); }
+        .segment-btn.active.ingreso { background: var(--bg-pagado); color: var(--txt-pagado); }
+        
+        .btn-submit { background: var(--verde-primario); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: 700; margin-top: 10px; cursor: pointer; }
+
+        /* ─── DISEÑO ESCRITORIO (Tabla) ─── */
+        .tx-header-desk { display: none; }
+        @media (min-width: 768px) {
+            .container { padding: 40px 20px; }
+            .modal { border-radius: 20px; transform: scale(0.9); }
+            .overlay { align-items: center; }
+            .overlay.active .modal { transform: scale(1); }
+            .mod-handle { display: none; }
+            .tx-header-desk { display: grid; grid-template-columns: 50px 100px 2fr 1.5fr 120px 100px; gap: 16px; padding: 12px 16px; font-size: 0.8rem; font-weight: 700; color: var(--texto-secundario); text-transform: uppercase; border-bottom: 2px solid var(--borde); margin-bottom: 8px; }
+            
+            .tx-card { grid-template-columns: 50px 100px 2fr 1.5fr 120px 100px; grid-template-areas: "icon date title tag amount state"; align-items: center; border-radius: 8px; margin-bottom: 4px; padding: 8px 16px; box-shadow: none; border: 1px solid transparent; border-bottom: 1px solid var(--borde); background: transparent; }
+            .tx-card:hover { background: var(--surface); border: 1px solid var(--borde); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: translateY(-1px); }
+            .tx-card:active { transform: translateY(0); }
+            
+            .tx-date { font-size: 0.85rem; color: var(--texto-secundario); }
+            .tx-title { font-size: 0.95rem; font-weight: 500; }
+            .tx-amount { font-size: 1rem; justify-self: start; }
+            .tx-state { justify-self: start; }
+            .tx-tag-wrap { margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- FILTROS -->
+    <div class="filtros-wrap">
+        <div class="f-label">Filtrar por estado</div>
+        <div class="f-scroll" id="filter-container">
+            <button class="f-btn active" onclick="filtrarEstado('todos', this)">✦ Todas</button>
+            <button class="f-btn" onclick="filtrarEstado('pagado', this)">✅ Pagado</button>
+            <button class="f-btn" onclick="filtrarEstado('pendiente', this)">⏳ Pendiente</button>
+            <button class="f-btn" onclick="filtrarEstado('guardado', this)">📥 Guardado</button>
+        </div>
+    </div>
+
+    <!-- SELECTOR DE MESES -->
+    <div class="meses-scroll">
+        <button class="mes-btn">Jun</button>
+        <button class="mes-btn">Jul</button>
+        <button class="mes-btn active">Ago</button>
+        <button class="mes-btn">Sep</button>
+        <button class="btn-calendario" onclick="alert('Abrir calendario completo')">📅 Calendario</button>
+    </div>
+
+    <!-- CABECERA PC -->
+    <div class="tx-header-desk">
+        <div></div> <div>Fecha</div> <div>Descripción</div> <div>Categoría</div> <div>Monto</div> <div>Estado</div>
+    </div>
+
+    <div class="fecha-separador">Agosto 2026</div>
+    
+    <div id="lista-transacciones">
+        <!-- Gasto Pagado -->
+        <div class="tx-card" data-estado="pagado" onclick="abrirModalInfo('Arriendo ProRenta', '🏠', '$263.744', '01/08/2026', 'https://miarriendo.prorenta.cl/', 'Pago mensual del departamento.', 'monto-negativo')">
+            <div class="tx-icon">🏠</div>
+            <div class="tx-date">01 Ago</div>
+            <div class="tx-state"><span class="badge st-pagado">Pagado</span></div>
+            <div class="tx-title">Arriendo ProRenta</div>
+            <div class="tx-tag-wrap"><span class="badge badge-cat cat-arriendo">Arriendo</span></div>
+            <div class="tx-amount monto-negativo">-$263.744</div>
+        </div>
+
+        <!-- Gasto Pendiente -->
+        <div class="tx-card" data-estado="pendiente" onclick="abrirModalInfo('Spotify', '💰', '$12.990', '18/08/2026', 'https://spotify.com/account', 'Suscripción plan familiar mensual.', 'monto-negativo')">
+            <div class="tx-icon">💰</div>
+            <div class="tx-date">18 Ago</div>
+            <div class="tx-state"><span class="badge st-pendiente">Pendiente</span></div>
+            <div class="tx-title">Spotify</div>
+            <div class="tx-tag-wrap"><span class="badge badge-cat cat-suscripcion">Suscripción</span></div>
+            <div class="tx-amount monto-negativo">-$12.990</div>
+        </div>
+        
+        <!-- Ejemplo de Ingreso -->
+        <div class="tx-card" data-estado="pagado" onclick="abrirModalInfo('Sueldo Municipalidad', '💼', '$950.000', '25/08/2026', 'N/A', 'Pago de remuneraciones mensuales.', 'monto-positivo')">
+            <div class="tx-icon">💼</div>
+            <div class="tx-date">25 Ago</div>
+            <div class="tx-state"><span class="badge st-pagado">Pagado</span></div>
+            <div class="tx-title">Sueldo Municipalidad</div>
+            <div class="tx-tag-wrap"><span class="badge badge-cat st-pagado">Ingreso</span></div>
+            <div class="tx-amount monto-positivo">+$950.000</div>
+        </div>
+    </div>
+</div>
+
+<!-- BOTÓN FLOTANTE (FAB) -->
+<button class="fab" onclick="abrirModalNuevo()">+</button>
+
+<!-- ==========================================
+     MODAL 1: DETALLES DE TRANSACCIÓN
+=========================================== -->
+<div class="overlay" id="modalInfo" onclick="cerrarModal(event, 'modalInfo')">
+    <div class="modal">
+        <div class="mod-handle"></div>
+        <div class="mod-header">
+            <div class="mod-icon" id="modIcon">💰</div>
+            <div>
+                <div class="mod-title" id="modTitle">Nombre Gasto</div>
+                <div style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 2px;" id="modDate">00/00/0000</div>
+            </div>
+            <div class="mod-monto" id="modAmount">$0</div>
+        </div>
+        <div class="mod-box">
+            <div><strong>Descripción:</strong> <span id="modDesc">Detalle...</span></div>
+            <div class="mod-url"><strong>URL:</strong> <a href="#" target="_blank" id="modUrl">Enlace</a></div>
+        </div>
+        <div class="mod-actions">
+            <button class="btn-act pag"><span style="font-size: 1.2rem;">✅</span> Pagado</button>
+            <button class="btn-act pen"><span style="font-size: 1.2rem;">⏳</span> Pendiente</button>
+            <button class="btn-act gua"><span style="font-size: 1.2rem;">📥</span> Guardado</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     MODAL 2: NUEVO REGISTRO
+=========================================== -->
+<div class="overlay" id="modalNuevo" onclick="cerrarModal(event, 'modalNuevo')">
+    <div class="modal">
+        <div class="mod-handle"></div>
+        <div class="mod-title" style="text-align: center; margin-bottom: 10px;">Nuevo Registro</div>
+        
+        <div class="segment-ctrl">
+            <div class="segment-btn active gasto" id="btnGasto" onclick="toggleTipo('gasto')">Gasto</div>
+            <div class="segment-btn" id="btnIngreso" onclick="toggleTipo('ingreso')">Ingreso</div>
+        </div>
+
+        <div class="form-group">
+            <label>Monto</label>
+            <input type="number" class="form-control" placeholder="$0" style="font-size: 1.4rem; font-weight: 700;">
+        </div>
+
+        <div class="form-group">
+            <label>Descripción / Título</label>
+            <input type="text" class="form-control" placeholder="Ej. Pago Spotify">
+        </div>
+
+        <div class="form-group">
+            <label>Categoría</label>
+            <select class="form-control">
+                <option>Servicios Básicos</option>
+                <option>Arriendo</option>
+                <option>Suscripciones</option>
+                <option>Otros</option>
+            </select>
+        </div>
+
+        <button class="btn-submit">Guardar Registro</button>
+    </div>
+</div>
+
+<script>
+    function filtrarEstado(estado, btnElement) {
+        document.querySelectorAll('#filter-container .f-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+        document.querySelectorAll('.tx-card').forEach(card => {
+            card.style.display = (estado === 'todos' || card.getAttribute('data-estado') === estado) ? '' : 'none';
+        });
+    }
+
+    /* Manejo de Modales */
+    function abrirModalInfo(titulo, icono, monto, fecha, url, desc, colorClase) {
+        document.getElementById('modTitle').innerText = titulo;
+        document.getElementById('modIcon').innerText = icono;
+        document.getElementById('modDate').innerText = fecha;
+        document.getElementById('modDesc').innerText = desc;
+        
+        const amnt = document.getElementById('modAmount');
+        amnt.innerText = monto;
+        amnt.className = 'mod-monto ' + colorClase; // Aplica rojo o verde
+
+        document.getElementById('modUrl').href = url;
+        document.getElementById('modUrl').innerText = url;
+
+        document.getElementById('modalInfo').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function abrirModalNuevo() {
+        document.getElementById('modalNuevo').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarModal(event, id) {
+        const overlay = document.getElementById(id);
+        if (event.target === overlay) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    /* Switch de Ingreso/Gasto en Nuevo Registro */
+    function toggleTipo(tipo) {
+        const btnG = document.getElementById('btnGasto');
+        const btnI = document.getElementById('btnIngreso');
+        
+        btnG.classList.remove('active', 'gasto');
+        btnI.classList.remove('active', 'ingreso');
+
+        if(tipo === 'gasto') {
+            btnG.classList.add('active', 'gasto');
+        } else {
+            btnI.classList.add('active', 'ingreso');
+        }
+    }
+</script>
+</body>
+</html>

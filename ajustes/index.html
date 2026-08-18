@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ajustes - Mis Finanzas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--texto-principal); margin: 0;">Ajustes</h2>
+    </div>
+    
+    <div style="display:flex; flex-direction:column; gap:12px;">
+        <button class="btn-ajustes" onclick="window.location.href='../categorias/'">
+            <span class="btn-ajustes-icon">🏷️</span>
+            <span class="btn-ajustes-text">Categorías</span>
+            <span class="btn-ajustes-arrow">›</span>
+        </button>
+        <button class="btn-ajustes" onclick="cerrarSesion()">
+            <span class="btn-ajustes-icon">🚪</span>
+            <span class="btn-ajustes-text salir">Salir</span>
+        </button>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="../dashboard/" class="nav-item">
+        <span class="icon">📊</span><span class="text">Dashboard</span>
+    </a>
+    <a href="../transacciones/" class="nav-item">
+        <span class="icon">📝</span><span class="text">Movimientos</span>
+    </a>
+    <a href="../ajustes/" class="nav-item active">
+        <span class="icon">⚙️</span><span class="text">Ajustes</span>
+    </a>
+</nav>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

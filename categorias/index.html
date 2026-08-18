@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Categorías - Mis Finanzas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <div style="display:flex; align-items:center; gap: 15px; margin-bottom: 20px;">
+        <button onclick="window.location.href='../ajustes/'" style="background:transparent; border:none; color:var(--texto-secundario); font-size:1.5rem; cursor:pointer;">←</button>
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--texto-principal); margin: 0;">Categorías</h2>
+    </div>
+
+    <div id="lista-categorias" style="display:flex; flex-direction:column; gap:10px;">
+        <!-- Renderizadas por JS -->
+    </div>
+</div>
+
+<button class="fab" onclick="abrirModalCategoria()">+</button>
+
+<!-- MODAL CATEGORÍA -->
+<div class="overlay" id="modalCategoria" onclick="cerrarModal(event, 'modalCategoria')">
+    <div class="modal">
+        <div class="mod-handle"></div>
+        <div class="mod-title" id="titulo-modal-cat" style="text-align: center; margin-bottom: 10px;">Nueva Categoría</div>
+        <input type="hidden" id="cat-id">
+        
+        <div class="form-group" style="margin-top: 15px;">
+            <label>Nombre de la Categoría</label>
+            <input type="text" class="form-control" id="cat-nombre" placeholder="Ej. Gimnasio, Mascotas...">
+        </div>
+
+        <div class="form-group">
+            <label>Ícono (Emoji)</label>
+            <input type="text" class="form-control" id="cat-icono" placeholder="Ej. 🏋️‍♂️, 🐶" maxlength="5">
+        </div>
+
+        <div class="form-group">
+            <label>Color de Etiqueta (Hex)</label>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="color" id="cat-color" value="#4A5568" style="width: 50px; height: 40px; border: 1px solid var(--borde); border-radius: 8px; cursor: pointer; background: transparent;">
+                <span style="font-size: 0.8rem; color: var(--texto-secundario);">Elige el color para la etiqueta en la lista</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Tipo de Flujo</label>
+            <select class="form-control" id="cat-tipo">
+                <option value="gasto">Gasto</option>
+                <option value="ingreso">Ingreso</option>
+            </select>
+        </div>
+
+        <button class="btn-submit" onclick="guardarCategoria()">Guardar Categoría</button>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="../dashboard/" class="nav-item">
+        <span class="icon">📊</span><span class="text">Dashboard</span>
+    </a>
+    <a href="../transacciones/" class="nav-item">
+        <span class="icon">📝</span><span class="text">Movimientos</span>
+    </a>
+    <a href="../ajustes/" class="nav-item active">
+        <span class="icon">⚙️</span><span class="text">Ajustes</span>
+    </a>
+</nav>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/categorias.js"></script>
+</body>
+</html>

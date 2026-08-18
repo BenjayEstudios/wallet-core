@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard - Mis Finanzas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--texto-principal); margin: 0;">Dashboard</h2>
+    </div>
+
+    <div style="background: var(--surface); padding: 30px 20px; border-radius: 16px; text-align: center; border: 1px dashed var(--borde); margin-top: 20px;">
+        <h3 style="color: var(--texto-secundario); margin-bottom: 10px;">📉 Área de Gráficos</h3>
+        <p style="color: var(--borde); font-size: 0.9rem;">Aquí se implementarán los reportes y resúmenes de tu dinero más adelante.</p>
+    </div>
+</div>
+
+<!-- MENÚ INFERIOR (DASHBOARD ACTIVO) -->
+<nav class="bottom-nav">
+    <a href="../dashboard/" class="nav-item active">
+        <span class="icon">📊</span><span class="text">Dashboard</span>
+    </a>
+    <a href="../transacciones/" class="nav-item">
+        <span class="icon">📝</span><span class="text">Movimientos</span>
+    </a>
+    <a href="../ajustes/" class="nav-item">
+        <span class="icon">⚙️</span><span class="text">Ajustes</span>
+    </a>
+</nav>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

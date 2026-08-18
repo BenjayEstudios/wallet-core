@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Movimientos - Mis Finanzas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--texto-principal); margin: 0;">Movimientos</h2>
+    </div>
+    <div id="lista-transacciones"></div>
+</div>
+
+<button class="fab" onclick="abrirModalNuevo()">+</button>
+
+<!-- MODAL NUEVO REGISTRO -->
+<div class="overlay" id="modalNuevo" onclick="cerrarModal(event, 'modalNuevo')">
+    <div class="modal">
+        <div class="mod-handle"></div>
+        <div class="mod-title" style="text-align: center; margin-bottom: 15px;">Nuevo Registro</div>
+        
+        <div class="segment-ctrl">
+            <div class="segment-btn active gasto" id="btnGasto" onclick="toggleTipo('gasto')">Gasto</div>
+            <div class="segment-btn" id="btnIngreso" onclick="toggleTipo('ingreso')">Ingreso</div>
+        </div>
+        <div class="form-group">
+            <label>Monto</label>
+            <input type="text" id="nuevo-monto" class="form-control" placeholder="$0" style="font-size: 1.4rem; font-weight: 700;" oninput="formatearMonto(this)">
+        </div>
+        <div class="form-group">
+            <label>Descripción / Título</label>
+            <input type="text" id="nuevo-desc" class="form-control" placeholder="Ej. Pago Spotify / Supermercado">
+        </div>
+        <div class="form-group">
+            <label>Categoría</label>
+            <select class="form-control" id="categoria-select">
+                <option value="">Cargando...</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Estado</label>
+            <div class="segment-ctrl" id="segment-estado">
+                <div class="segment-btn estado-btn active pendiente" id="btnEstPendiente" onclick="toggleEstado('pendiente')">Pendiente</div>
+                <div class="segment-btn estado-btn" id="btnEstPagado" onclick="toggleEstado('pagado')">Pagado</div>
+                <div class="segment-btn estado-btn" id="btnEstGuardado" onclick="toggleEstado('guardado')">Guardado</div>
+            </div>
+        </div>
+        <button class="btn-submit" onclick="guardarNuevoRegistro()">Guardar Registro</button>
+    </div>
+</div>
+
+<!-- MODAL INFO (VER DETALLE) -->
+<div class="overlay" id="modalInfo" onclick="cerrarModal(event, 'modalInfo')">
+    <div class="modal">
+        <div class="mod-handle"></div>
+        <div class="mod-header">
+            <div class="mod-icon" id="modIcon">🏷️</div>
+            <div>
+                <div class="mod-title" id="modTitle">Detalle</div>
+                <div style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 2px;" id="modDate">Fecha</div>
+            </div>
+            <div class="mod-monto" id="modAmount">$0</div>
+        </div>
+        <div class="mod-box">
+            <div style="display:flex; justify-content: space-between; align-items:center;">
+                <strong>Estado:</strong> <span id="modStateTag" class="badge"></span>
+            </div>
+            <hr style="border: 0; height: 1px; background: var(--borde); margin: 5px 0;">
+            <div><strong>Descripción:</strong> <span id="modDesc">Detalle...</span></div>
+        </div>
+        <button class="btn-submit" style="background: var(--surface-elevated); border: 1px solid var(--borde);" onclick="abrirModalEditar()">Editar Transacción</button>
+    </div>
+</div>
+
+<!-- MODAL EDITAR REGISTRO -->
+<div class="overlay" id="modalEditar" onclick="cerrarModal(event, 'modalEditar')">
+    <div class="modal">
+        <div class="mod-handle"></div>
+        <div class="mod-title" style="text-align: center; margin-bottom: 15px;">Editar Registro</div>
+        
+        <div class="segment-ctrl">
+            <div class="segment-btn active gasto" id="edit-btnGasto" onclick="toggleTipo('gasto', true)">Gasto</div>
+            <div class="segment-btn" id="edit-btnIngreso" onclick="toggleTipo('ingreso', true)">Ingreso</div>
+        </div>
+        <div class="form-group">
+            <label>Monto</label>
+            <input type="text" id="edit-monto" class="form-control" style="font-size: 1.4rem; font-weight: 700;" oninput="formatearMonto(this)">
+        </div>
+        <div class="form-group">
+            <label>Descripción / Título</label>
+            <input type="text" id="edit-desc" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Categoría</label>
+            <select class="form-control" id="edit-categoria-select"></select>
+        </div>
+        <div class="form-group">
+            <label>Estado</label>
+            <div class="segment-ctrl" id="edit-segment-estado">
+                <div class="segment-btn edit-estado-btn active pendiente" id="edit-btnEstPendiente" onclick="toggleEstado('pendiente', true)">Pendiente</div>
+                <div class="segment-btn edit-estado-btn" id="edit-btnEstPagado" onclick="toggleEstado('pagado', true)">Pagado</div>
+                <div class="segment-btn edit-estado-btn" id="edit-btnEstGuardado" onclick="toggleEstado('guardado', true)">Guardado</div>
+            </div>
+        </div>
+        <button class="btn-submit" onclick="guardarEdicionRegistro()">Guardar Cambios</button>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="../dashboard/" class="nav-item">
+        <span class="icon">📊</span><span class="text">Dashboard</span>
+    </a>
+    <a href="../transacciones/" class="nav-item active">
+        <span class="icon">📝</span><span class="text">Movimientos</span>
+    </a>
+    <a href="../ajustes/" class="nav-item">
+        <span class="icon">⚙️</span><span class="text">Ajustes</span>
+    </a>
+</nav>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/transacciones.js"></script>
+</body>
+</html>
