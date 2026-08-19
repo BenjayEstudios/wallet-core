@@ -125,3 +125,14 @@ body { background-color: var(--bg-app); color: var(--texto-principal); padding-b
     90% { opacity: 1; transform: translateY(0); }
     100% { opacity: 0; transform: translateY(-20px); }
 }
+.fecha-separador {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--texto-secundario);
+    text-transform: uppercase;
+    margin: 24px 0 12px 0;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
