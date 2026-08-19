@@ -12,9 +12,6 @@ try {
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":id_usuario", $usuario_id, PDO::PARAM_INT);
     $stmt->execute();
-    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode(["status" => "success", "data" => $resultados]);
-} catch(Exception $e) {
-    echo json_encode(["status" => "error", "message" => $e->getMessage()]);
-}
+    echo json_encode(["status" => "success", "data" => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
+} catch(Exception $e) { echo json_encode(["status" => "error", "message" => $e->getMessage()]); }
 ?>

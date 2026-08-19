@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Movimientos - Mis Finanzas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -12,6 +12,8 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--texto-principal); margin: 0;">Movimientos</h2>
     </div>
+
+    <div class="filtro-meses-container" id="filtro-meses-container"></div>
     <div id="lista-transacciones"></div>
 </div>
 
@@ -37,13 +39,13 @@
         </div>
         <div class="form-group">
             <label>Categoría</label>
-            <select class="form-control" id="categoria-select">
+            <select class="form-control input-destacado" id="categoria-select">
                 <option value="">Cargando...</option>
             </select>
         </div>
         <div class="form-group">
             <label>Fecha de Transacción</label>
-            <input type="date" id="nuevo-fecha" class="form-control" style="font-weight: 600;">
+            <input type="date" id="nuevo-fecha" class="form-control input-destacado">
         </div>
         <div class="form-group">
             <label>Estado</label>
@@ -100,11 +102,11 @@
         </div>
         <div class="form-group">
             <label>Categoría</label>
-            <select class="form-control" id="edit-categoria-select"></select>
+            <select class="form-control input-destacado" id="edit-categoria-select"></select>
         </div>
         <div class="form-group">
             <label>Fecha de Transacción</label>
-            <input type="date" id="edit-fecha" class="form-control" style="font-weight: 600;">
+            <input type="date" id="edit-fecha" class="form-control input-destacado">
         </div>
         <div class="form-group">
             <label>Estado</label>
@@ -118,6 +120,7 @@
     </div>
 </div>
 
+<!-- MENÚ INFERIOR (SIN BOTÓN SALIR) -->
 <nav class="bottom-nav">
     <a href="../dashboard/" class="nav-item">
         <span class="icon">📊</span><span class="text">Dashboard</span>
