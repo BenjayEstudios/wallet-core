@@ -12,21 +12,16 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 class="page-title">Movimientos</h2>
     </div>
-
     <div class="filtro-meses-container" id="filtro-meses-container"></div>
     <div id="lista-transacciones"></div>
 </div>
-
 <button class="fab" onclick="abrirModalNuevo()">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 </button>
-
-<!-- Modales -->
 <div class="overlay" id="modalNuevo" onclick="cerrarModal(event, 'modalNuevo')">
     <div class="modal">
         <div class="mod-handle"></div>
         <div class="mod-title" style="text-align: center; margin-bottom: 15px;">Nuevo Registro</div>
-        
         <div class="segment-ctrl">
             <div class="segment-btn active gasto" id="btnGasto" onclick="toggleTipo('gasto')">Gasto</div>
             <div class="segment-btn" id="btnIngreso" onclick="toggleTipo('ingreso')">Ingreso</div>
@@ -58,7 +53,6 @@
         <button class="btn-submit" onclick="guardarNuevoRegistro()">Guardar Registro</button>
     </div>
 </div>
-
 <div class="overlay" id="modalInfo" onclick="cerrarModal(event, 'modalInfo')">
     <div class="modal">
         <div class="mod-handle"></div>
@@ -80,12 +74,10 @@
         <button class="btn-submit" style="background: var(--surface-elevated); border: 1px solid var(--borde);" onclick="abrirModalEditar()">Editar Transacción</button>
     </div>
 </div>
-
 <div class="overlay" id="modalEditar" onclick="cerrarModal(event, 'modalEditar')">
     <div class="modal">
         <div class="mod-handle"></div>
         <div class="mod-title" style="text-align: center; margin-bottom: 15px;">Editar Registro</div>
-        
         <div class="segment-ctrl">
             <div class="segment-btn active gasto" id="edit-btnGasto" onclick="toggleTipo('gasto', true)">Gasto</div>
             <div class="segment-btn" id="edit-btnIngreso" onclick="toggleTipo('ingreso', true)">Ingreso</div>
@@ -117,10 +109,7 @@
         <button class="btn-submit" onclick="guardarEdicionRegistro()">Guardar Cambios</button>
     </div>
 </div>
-
-<!-- Menú renderizado por JS -->
 <nav class="bottom-nav" id="bottom-nav"></nav>
-
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/transacciones.js"></script>
 </body>

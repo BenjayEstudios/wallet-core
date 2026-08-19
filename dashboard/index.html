@@ -6,19 +6,70 @@
     <title>Dashboard - Mis Finanzas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- CHART.JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="container">
-    <div style="margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 class="page-title">Dashboard</h2>
     </div>
-    <div style="background: var(--surface); padding: 30px 20px; border-radius: 16px; text-align: center; border: 1px dashed var(--borde); margin-top: 20px;">
-        <h3 style="color: var(--texto-secundario); margin-bottom: 10px;">📉 Área de Gráficos</h3>
-        <p style="color: var(--borde); font-size: 0.9rem;">Aquí se implementarán los reportes y resúmenes de tu dinero más adelante.</p>
+
+    <div class="filtro-meses-container" id="filtro-meses-container"></div>
+
+    <div class="balance-card">
+        <div class="balance-label">Balance Total del Mes</div>
+        <div class="balance-total" id="dash-balance">$0</div>
+        
+        <div class="balance-row">
+            <div class="balance-col ingresos">
+                <span class="label" style="font-size:0.75rem; color:var(--texto-secundario); font-weight:600; text-transform:uppercase;">Ingresos ⬆️</span>
+                <span class="val" id="dash-ingresos">$0</span>
+            </div>
+            <div class="balance-col gastos">
+                <span class="label" style="font-size:0.75rem; color:var(--texto-secundario); font-weight:600; text-transform:uppercase;">Gastos (Pagados) ⬇️</span>
+                <span class="val" id="dash-gastos">$0</span>
+            </div>
+        </div>
     </div>
+
+    <div class="summary-cards-row">
+        <div class="summary-mini-card">
+            <span class="label">Guardado 🏦</span>
+            <span class="val val-guardado" id="dash-guardado">$0</span>
+        </div>
+        <div class="summary-mini-card">
+            <span class="label">Pendiente ⚠️</span>
+            <span class="val val-pendiente" id="dash-pendiente">$0</span>
+        </div>
+    </div>
+
+    <!-- GRÁFICOS (FASE 2) -->
+    <div class="chart-wrapper">
+        <div class="chart-header">🍩 En qué gasto mi dinero</div>
+        <div class="chart-container">
+            <div id="ph-donut" style="display:flex; height:100%; align-items:center; justify-content:center; color:var(--texto-secundario); font-size:0.9rem;">Sin datos de gastos para graficar</div>
+            <canvas id="chartCategorias" style="display:none;"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-wrapper">
+        <div class="chart-header">📈 Tendencia de Gastos</div>
+        <div class="chart-container">
+            <div id="ph-line" style="display:flex; height:100%; align-items:center; justify-content:center; color:var(--texto-secundario); font-size:0.9rem;">Sin datos de gastos para graficar</div>
+            <canvas id="chartEvolucion" style="display:none;"></canvas>
+        </div>
+    </div>
+
+    <button class="btn-export" onclick="exportarCSV()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Exportar Datos para IA (CSV)
+    </button>
 </div>
 
 <nav class="bottom-nav" id="bottom-nav"></nav>
+
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/dashboard.js"></script>
 </body>
 </html>

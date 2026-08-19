@@ -124,10 +124,7 @@ function inicializarFiltroMeses() {
         filtroMesActual = parseInt(ultimoMes);
     }
     
-    let html = `<div class="mes-pill ${filtroMesActual === 'ALL' ? 'active' : ''}" id="pill-ALL" onclick="seleccionarMes('ALL', 'ALL', this)" style="font-weight: 800;">
-                    ALL
-                </div>`;
-                
+    let html = `<div class="mes-pill ${filtroMesActual === 'ALL' ? 'active' : ''}" id="pill-ALL" onclick="seleccionarMes('ALL', 'ALL', this)" style="font-weight: 800;">ALL</div>`;
     let pillActivoId = filtroMesActual === 'ALL' ? 'pill-ALL' : '';
     
     periodosUnicos.forEach(periodo => {

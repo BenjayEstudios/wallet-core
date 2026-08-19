@@ -13,40 +13,30 @@
         <button onclick="window.location.href='../ajustes/'" style="background:transparent; border:none; color:var(--texto-secundario); font-size:1.5rem; cursor:pointer;">←</button>
         <h2 class="page-title">Categorías</h2>
     </div>
-
     <div id="lista-categorias" style="display:flex; flex-direction:column; gap:10px;"></div>
 </div>
-
 <button class="fab" onclick="abrirModalCategoria()">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 </button>
-
-<!-- MODAL CATEGORÍA CON LIVE PREVIEW -->
 <div class="overlay" id="modalCategoria" onclick="cerrarModal(event, 'modalCategoria')">
     <div class="modal">
         <div class="mod-handle"></div>
         <div class="mod-title" id="titulo-modal-cat" style="text-align: center;">Nueva Categoría</div>
-        
-        <!-- CAJA DE LIVE PREVIEW -->
         <div style="display:flex; justify-content:center; margin: 15px 0 20px 0;">
             <div style="display:flex; align-items:center; gap:12px; padding: 12px 20px; border-radius: 16px; background: var(--surface-elevated); border: 1px solid var(--borde);">
                 <span id="preview-icon" style="font-size: 1.8rem; background: var(--surface); padding:8px; border-radius:10px; border:1px solid var(--borde);">🏷️</span>
                 <span id="preview-badge" class="badge" style="background-color: rgba(74, 85, 104, 0.2); color: #A0ABC0; font-size: 0.85rem;">Nombre Categoría</span>
             </div>
         </div>
-
         <input type="hidden" id="cat-id">
-        
         <div class="form-group">
             <label>Nombre de la Categoría</label>
             <input type="text" class="form-control" id="cat-nombre" placeholder="Ej. Gimnasio, Mascotas...">
         </div>
-
         <div class="form-group">
             <label>Ícono (Emoji)</label>
             <input type="text" class="form-control" id="cat-icono" placeholder="Ej. 🏋️‍♂️, 🐶" maxlength="5">
         </div>
-
         <div class="form-group">
             <label>Color de Etiqueta (Hex)</label>
             <div style="display: flex; gap: 10px; align-items: center;">
@@ -54,7 +44,6 @@
                 <span style="font-size: 0.8rem; color: var(--texto-secundario);">Elige el color para la etiqueta en la lista</span>
             </div>
         </div>
-
         <div class="form-group">
             <label>Tipo de Flujo</label>
             <select class="form-control" id="cat-tipo">
@@ -62,13 +51,10 @@
                 <option value="ingreso">Ingreso</option>
             </select>
         </div>
-
         <button class="btn-submit" onclick="guardarCategoria()">Guardar Categoría</button>
     </div>
 </div>
-
 <nav class="bottom-nav" id="bottom-nav"></nav>
-
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/categorias.js"></script>
 </body>

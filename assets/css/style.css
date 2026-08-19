@@ -13,7 +13,6 @@ body { background-color: var(--bg-app); color: var(--texto-principal); padding-b
 .hide-mobile { display: none; }
 @media (min-width: 768px) { .hide-mobile { display: inline; } }
 
-/* CLASE PARA LOS TÍTULOS DE PANTALLA (MENOS BLANCO) */
 .page-title { font-size: 1.4rem; font-weight: 800; color: #CBD5E0; margin: 0; }
 
 .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom:12px; }
@@ -86,10 +85,36 @@ input[type="date"].input-destacado { cursor: pointer; text-transform: uppercase;
 .mes-pill.active { background: var(--purpura-activo); color: #FFFFFF; border-color: #805AD5; box-shadow: 0 0 15px rgba(107, 70, 193, 0.4); }
 .mes-pill.active .anio { opacity: 1; }
 
-/* SEPARADOR GRIS/A0ABC0 PARA LOS MESES */
 .fecha-separador { display: flex; align-items: center; gap: 10px; color: var(--texto-secundario); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin: 24px 0 12px 0; letter-spacing: 1px; }
 .fecha-separador::after { content: ""; flex: 1; height: 1px; background: var(--borde); }
 
 .toast-container { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
 .toast { background: var(--surface-elevated); color: var(--texto-principal); padding: 12px 24px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 8px 16px rgba(0,0,0,0.5); border: 1px solid var(--borde); animation: toastFade 3s forwards; }
 @keyframes toastFade { 0% { opacity: 0; transform: translateY(20px); } 10% { opacity: 1; transform: translateY(0); } 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
+
+/* --- ESTILOS DASHBOARD --- */
+.balance-card { background: var(--surface-elevated); border-radius: 20px; padding: 24px; text-align: center; border: 1px solid var(--borde); margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.balance-label { font-size: 0.85rem; color: var(--texto-secundario); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;}
+.balance-total { font-size: 2.8rem; font-weight: 900; color: var(--texto-principal); margin: 0; }
+.balance-row { display: flex; justify-content: space-between; border-top: 1px solid var(--borde); padding-top: 20px; margin-top: 20px; }
+.balance-col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.balance-col:first-child { border-right: 1px solid var(--borde); }
+.balance-col .val { font-size: 1.3rem; font-weight: 800; }
+.balance-col.ingresos .val { color: var(--txt-pagado); }
+.balance-col.gastos .val { color: var(--texto-principal); }
+
+.summary-cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.summary-mini-card { background: var(--surface); border: 1px solid var(--borde); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.summary-mini-card .label { font-size: 0.8rem; color: var(--texto-secundario); font-weight: 600; text-transform: uppercase; }
+.summary-mini-card .val { font-size: 1.2rem; font-weight: 800; }
+.val-guardado { color: var(--txt-guardado); }
+.val-pendiente { color: var(--txt-pendiente); }
+
+.chart-wrapper { background: var(--surface-elevated); border-radius: 20px; padding: 20px; border: 1px solid var(--borde); margin-bottom: 20px; }
+.chart-header { font-size: 1.1rem; font-weight: 800; color: var(--texto-principal); margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
+
+/* Contenedor relativo estricto para Chart.js */
+.chart-container { position: relative; height: 250px; width: 100%; }
+
+.btn-export { background: transparent; border: 1px solid var(--borde); color: var(--texto-principal); border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: 0.2s; width: 100%; font-size: 1.05rem; font-weight: 700; margin-bottom: 30px;}
+.btn-export:active { transform: scale(0.98); background: var(--surface-elevated); }
