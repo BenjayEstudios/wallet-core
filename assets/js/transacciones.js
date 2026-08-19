@@ -66,14 +66,15 @@ async function guardarNuevoRegistro() {
     const inputMonto = document.getElementById('nuevo-monto').value;
     const desc = document.getElementById('nuevo-desc').value;
     const id_categoria = document.getElementById('categoria-select').value;
+    const fecha = document.getElementById('nuevo-fecha').value; // NUEVO
     const estado = getEstadoSeleccionado();
     const tipo = document.getElementById('btnGasto').classList.contains('active') ? 'gasto' : 'ingreso';
     const usuario_id = localStorage.getItem('usuario_id') || 1; 
-    
-    if(!inputMonto || !desc || !id_categoria) return mostrarToast("Por favor, llena todos los campos.");
 
-    const montoLimpio = inputMonto.replace(/\D/g, ''); 
-    const datos = { usuario_id, tipo, monto: montoLimpio, descripcion: desc, id_categoria, estado };
+    if(!inputMonto || !desc || !id_categoria || !fecha) return mostrarToast("Por favor, llena todos los campos.");
+
+    const montoLimpio = inputMonto.replace(/\D/g, '');
+    const datos = { usuario_id, tipo, monto: montoLimpio, descripcion: desc, id_categoria, estado, fecha_transaccion: fecha };
     
     try {
         const response = await fetch('../api/insert_registro.php', {
@@ -195,6 +196,7 @@ function abrirModalEditar() {
         document.getElementById('edit-monto').value = '$' + parseInt(tx.monto).toLocaleString('es-CL');
         document.getElementById('edit-desc').value = tx.descripcion || tx.titulo;
         document.getElementById('edit-categoria-select').value = tx.id_categoria;
+        document.getElementById('edit-fecha').value = tx.fecha_transaccion; // NUEVO
         toggleEstado(tx.estado_pago, true);
         
         document.getElementById('modalEditar').classList.add('active');
@@ -206,14 +208,15 @@ async function guardarEdicionRegistro() {
     const inputMonto = document.getElementById('edit-monto').value;
     const desc = document.getElementById('edit-desc').value;
     const id_categoria = document.getElementById('edit-categoria-select').value;
+    const fecha = document.getElementById('edit-fecha').value;
     const estado = getEstadoSeleccionado(true);
     const tipo = document.getElementById('edit-btnGasto').classList.contains('active') ? 'gasto' : 'ingreso';
     const usuario_id = localStorage.getItem('usuario_id') || 1; 
     
-    if(!inputMonto || !desc || !id_categoria) return mostrarToast("Por favor, llena todos los campos.");
+    if(!inputMonto || !desc || !id_categoria || !fecha) return mostrarToast("Por favor, llena todos los campos.");
 
     const montoLimpio = inputMonto.replace(/\D/g, ''); 
-    const datos = { id: txActualId, usuario_id, tipo, monto: montoLimpio, descripcion: desc, id_categoria, estado };
+    const datos = { id: txActualId, usuario_id, tipo, monto: montoLimpio, descripcion: desc, id_categoria, estado, fecha_transaccion: fecha };
     
     try {
         const response = await fetch('../api/update_registro.php', {
@@ -234,4 +237,5 @@ async function guardarEdicionRegistro() {
 document.addEventListener('DOMContentLoaded', () => {
     cargarTransacciones();
     cargarCategoriasDropdown();
+    document.getElementById('nuevo-fecha').value = new Date().toISOString().split('T')[0];
 });
