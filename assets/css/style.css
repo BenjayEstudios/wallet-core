@@ -13,19 +13,15 @@ body { background-color: var(--bg-app); color: var(--texto-principal); padding-b
 .hide-mobile { display: none; }
 @media (min-width: 768px) { .hide-mobile { display: inline; } }
 
+/* CLASE PARA LOS TÍTULOS DE PANTALLA (MENOS BLANCO) */
+.page-title { font-size: 1.4rem; font-weight: 800; color: #CBD5E0; margin: 0; }
+
 .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom:12px; }
 .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px; }
 .form-control { background: var(--surface-elevated); border: 1px solid var(--borde); color: var(--texto-principal); padding: 12px 16px; border-radius: 10px; font-size: 1rem; outline: none; transition: 0.2s; color-scheme: dark;}
 .form-control:focus { border-color: var(--verde-primario); }
 
-/* NUEVA CLASE PARA DESTACAR FECHA Y CATEGORÍA */
-.input-destacado {
-    font-weight: 700;
-    font-size: 1.05rem;
-    padding: 14px 16px;
-    letter-spacing: 0.3px;
-    background-color: var(--surface); /* Un tono ligeramente diferente para resaltar */
-}
+.input-destacado { font-weight: 700; font-size: 1.05rem; padding: 14px 16px; letter-spacing: 0.3px; background-color: var(--surface); }
 select.input-destacado { cursor: pointer; }
 input[type="date"].input-destacado { cursor: pointer; text-transform: uppercase; }
 
@@ -38,18 +34,19 @@ input[type="date"].input-destacado { cursor: pointer; text-transform: uppercase;
 .btn-submit { background: var(--verde-primario); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: 700; margin-top: 10px; cursor: pointer; width:100%; transition: 0.2s;}
 .btn-submit:active { transform: scale(0.98); }
 
-.tx-card { background: var(--surface); border-radius: 12px; padding: 16px; margin-bottom: 12px; display: grid; grid-template-columns: 40px 1fr auto; grid-template-areas: "icon date state" "icon title amount" "icon tag amount"; gap: 4px 12px; align-items: center; border: 1px solid var(--borde); cursor: pointer; transition: 0.2s;}
+.tx-card { background: var(--surface); border-radius: 16px; padding: 16px 20px; margin-bottom: 14px; display: grid; grid-template-columns: 48px 1fr auto; grid-template-areas: "icon date state" "icon title amount" "icon tag amount"; gap: 6px 16px; align-items: center; border: 1px solid var(--borde); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
 .tx-card:active { transform: scale(0.98); }
-.tx-icon { grid-area: icon; font-size: 1.5rem; text-align: center; background: var(--surface-elevated); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--borde); }
-.tx-date { grid-area: date; font-size: 0.75rem; color: var(--texto-secundario); font-weight: 500; }
+.tx-icon { grid-area: icon; font-size: 1.8rem; text-align: center; background: var(--surface-elevated); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--borde); }
+.tx-date { grid-area: date; font-size: 0.8rem; color: var(--texto-secundario); font-weight: 500; margin-bottom: 2px;}
 .tx-state { grid-area: state; justify-self: end; }
-.tx-title { grid-area: title; font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--texto-principal); }
-.tx-tag-wrap { grid-area: tag; margin-top: 2px; }
-.tx-amount { grid-area: amount; font-size: 1.1rem; font-weight: 700; justify-self: end; }
-.badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.05); }
-.st-pagado { background: var(--bg-pagado); color: var(--txt-pagado); }
-.st-guardado { background: var(--bg-guardado); color: var(--txt-guardado); }
-.st-pendiente { background: var(--bg-pendiente); color: var(--txt-pendiente); }
+.tx-title { grid-area: title; font-size: 1.05rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--texto-principal); }
+.tx-tag-wrap { grid-area: tag; margin-top: 4px; }
+.tx-amount { grid-area: amount; font-size: 1.25rem; font-weight: 800; justify-self: end; align-self: center; }
+
+.badge { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; }
+.st-pagado { background: rgba(56, 161, 105, 0.2); color: var(--txt-pagado); border: 1px solid rgba(56, 161, 105, 0.3); font-weight: 700; text-transform: uppercase;}
+.st-guardado { background: rgba(99, 179, 237, 0.2); color: var(--txt-guardado); border: 1px solid rgba(99, 179, 237, 0.3); font-weight: 700; text-transform: uppercase;}
+.st-pendiente { background: rgba(252, 129, 129, 0.2); color: var(--txt-pendiente); border: 1px solid rgba(252, 129, 129, 0.3); font-weight: 700; text-transform: uppercase;}
 .monto-negativo { color: var(--txt-pendiente); }
 .monto-positivo { color: var(--txt-pagado); }
 
@@ -69,11 +66,10 @@ input[type="date"].input-destacado { cursor: pointer; text-transform: uppercase;
 .mod-box { background: var(--surface-elevated); border-radius: 12px; padding: 16px; font-size: 0.85rem; color: var(--texto-secundario); display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--borde); margin-bottom: 12px;}
 .mod-box strong { color: #E2E8F0; }
 
-/* MENÚ INFERIOR (SIN SALIR) */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--borde); z-index: 800; }
-.nav-item { text-align: center; color: var(--texto-secundario); text-decoration: none; display: flex; flex-direction: column; font-size: 0.75rem; gap: 4px; transition: 0.2s; }
+.nav-item { text-align: center; color: var(--texto-secundario); text-decoration: none; display: flex; flex-direction: column; font-size: 0.75rem; gap: 4px; transition: 0.2s; align-items: center;}
 .nav-item.active { color: var(--verde-primario); }
-.nav-item .icon { font-size: 1.5rem; }
+.nav-item .icon { font-size: 1.5rem; display: block; margin-bottom: 2px;}
 
 .btn-ajustes { background: var(--surface-elevated); border: 1px solid var(--borde); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; cursor: pointer; transition: 0.2s; width: 100%; margin-bottom: 10px;}
 .btn-ajustes:active { transform: scale(0.98); }
@@ -84,15 +80,16 @@ input[type="date"].input-destacado { cursor: pointer; text-transform: uppercase;
 
 .filtro-meses-container { display: flex; align-items: center; gap: 12px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
 .filtro-meses-container::-webkit-scrollbar { display: none; }
-.mes-pill { min-width: 54px; height: 54px; border-radius: 50%; background: var(--surface-elevated); color: var(--texto-secundario); display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 0.95rem; font-weight: 600; line-height: 1.1; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; flex-shrink: 0; }
-.mes-pill .anio { font-size: 0.65rem; font-weight: 400; opacity: 0.6; }
+.mes-pill { min-width: 58px; height: 58px; border-radius: 50%; background: var(--surface-elevated); color: var(--texto-secundario); display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 1.05rem; font-weight: 700; line-height: 1.1; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; flex-shrink: 0; }
+.mes-pill span { display: block; }
+.mes-pill .anio { font-size: 0.7rem; font-weight: 500; opacity: 0.7; margin-top: 2px; }
 .mes-pill.active { background: var(--purpura-activo); color: #FFFFFF; border-color: #805AD5; box-shadow: 0 0 15px rgba(107, 70, 193, 0.4); }
 .mes-pill.active .anio { opacity: 1; }
 
-.fecha-separador { display: flex; align-items: center; gap: 10px; color: var(--txt-guardado); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin: 24px 0 12px 0; letter-spacing: 1px; }
+/* SEPARADOR GRIS/A0ABC0 PARA LOS MESES */
+.fecha-separador { display: flex; align-items: center; gap: 10px; color: var(--texto-secundario); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin: 24px 0 12px 0; letter-spacing: 1px; }
 .fecha-separador::after { content: ""; flex: 1; height: 1px; background: var(--borde); }
 
-/* TOAST ALERTS */
 .toast-container { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
 .toast { background: var(--surface-elevated); color: var(--texto-principal); padding: 12px 24px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 8px 16px rgba(0,0,0,0.5); border: 1px solid var(--borde); animation: toastFade 3s forwards; }
 @keyframes toastFade { 0% { opacity: 0; transform: translateY(20px); } 10% { opacity: 1; transform: translateY(0); } 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }

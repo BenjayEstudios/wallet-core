@@ -7,6 +7,8 @@ let filtroMesActual = new Date().getMonth() + 1;
 let filtroAnioActual = new Date().getFullYear();
 
 async function cargarCategoriasDropdown() {
+    const select = document.getElementById('categoria-select');
+    if(!select) return;
     const uid = localStorage.getItem('usuario_id') || 1;
     try {
         const resp = await fetch(`../api/get_categorias.php?usuario_id=${uid}`);
@@ -20,7 +22,7 @@ async function cargarCategoriasDropdown() {
     } catch(e) {}
 }
 
-function filtrarCategoriasPorTipo(tipo, selectId) {
+function filtrarCategoriasPorTipo(tipo, selectId='categoria-select') {
     const select = document.getElementById(selectId);
     if(!select) return;
     select.innerHTML = '';
@@ -122,8 +124,7 @@ function inicializarFiltroMeses() {
         filtroMesActual = parseInt(ultimoMes);
     }
     
-    // PÍLDORA "ALL" ACTUALIZADA (Sin infinito, fuente Bold/Black)
-    let html = `<div class="mes-pill ${filtroMesActual === 'ALL' ? 'active' : ''}" id="pill-ALL" onclick="seleccionarMes('ALL', 'ALL', this)" style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 0.5px;">
+    let html = `<div class="mes-pill ${filtroMesActual === 'ALL' ? 'active' : ''}" id="pill-ALL" onclick="seleccionarMes('ALL', 'ALL', this)" style="font-weight: 800;">
                     ALL
                 </div>`;
                 
@@ -140,7 +141,7 @@ function inicializarFiltroMeses() {
         if(isActive) pillActivoId = id;
         
         html += `<div class="mes-pill ${isActive}" id="${id}" onclick="seleccionarMes(${mes}, ${anio}, this)">
-                    ${nombreMes} <span class="anio">${anioCorto}</span>
+                    <span>${nombreMes}</span> <span class="anio">${anioCorto}</span>
                  </div>`;
     });
     
@@ -200,8 +201,8 @@ function renderizarListaFiltrada() {
         const fechaParts = tx.fecha_transaccion.split('-');
         const f = new Date(fechaParts[0], fechaParts[1] - 1, fechaParts[2]);
         const dia = String(f.getDate()).padStart(2, '0');
-        const mesCorto = f.toLocaleString('es-CL', { month: 'short' });
-        const fechaCorta = `${dia} ${mesCorto}`;
+        const mesCorto = f.toLocaleString('es-CL', { month: 'short' }).replace('.', '');
+        const fechaCorta = `${dia} ${mesCorto}.`;
 
         const mesLargo = f.toLocaleString('es-CL', { month: 'long' });
         const anio = f.getFullYear();
@@ -212,10 +213,12 @@ function renderizarListaFiltrada() {
             lista.insertAdjacentHTML('beforeend', `<div class="fecha-separador">${mesActualAgrupador}</div>`);
         }
         
-        const catColor = tx.color_hex || '#4A5568'; 
+        const catColorHex = tx.color_hex || '#4A5568'; 
+        const bgTransparente = hexToRgba(catColorHex, 0.2); 
+        
         const badgeCatHtml = tx.nombre_categoria 
-            ? `<span class="badge" style="background-color: ${catColor}; color: #fff; border: none; font-size: 0.75rem; text-transform: none; padding: 4px 8px; border-radius: 6px;">${tx.nombre_categoria}</span>`
-            : `<span class="badge" style="background-color: #4A5568; color: #fff; border: none;">Sin Categoría</span>`;
+            ? `<span class="badge" style="background-color: ${bgTransparente}; color: ${catColorHex}; border: none;">${tx.nombre_categoria}</span>`
+            : `<span class="badge" style="background-color: rgba(74, 85, 104, 0.2); color: #A0ABC0; border: none;">Sin Categoría</span>`;
 
         const html = `
         <div class="tx-card" onclick="abrirDetalle(${tx.id})">

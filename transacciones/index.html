@@ -10,16 +10,18 @@
 <body>
 <div class="container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--texto-principal); margin: 0;">Movimientos</h2>
+        <h2 class="page-title">Movimientos</h2>
     </div>
 
     <div class="filtro-meses-container" id="filtro-meses-container"></div>
     <div id="lista-transacciones"></div>
 </div>
 
-<button class="fab" onclick="abrirModalNuevo()">+</button>
+<button class="fab" onclick="abrirModalNuevo()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+</button>
 
-<!-- MODAL NUEVO REGISTRO -->
+<!-- Modales -->
 <div class="overlay" id="modalNuevo" onclick="cerrarModal(event, 'modalNuevo')">
     <div class="modal">
         <div class="mod-handle"></div>
@@ -39,9 +41,7 @@
         </div>
         <div class="form-group">
             <label>Categoría</label>
-            <select class="form-control input-destacado" id="categoria-select">
-                <option value="">Cargando...</option>
-            </select>
+            <select class="form-control input-destacado" id="categoria-select"></select>
         </div>
         <div class="form-group">
             <label>Fecha de Transacción</label>
@@ -59,7 +59,6 @@
     </div>
 </div>
 
-<!-- MODAL INFO (VER DETALLE) -->
 <div class="overlay" id="modalInfo" onclick="cerrarModal(event, 'modalInfo')">
     <div class="modal">
         <div class="mod-handle"></div>
@@ -82,7 +81,6 @@
     </div>
 </div>
 
-<!-- MODAL EDITAR REGISTRO -->
 <div class="overlay" id="modalEditar" onclick="cerrarModal(event, 'modalEditar')">
     <div class="modal">
         <div class="mod-handle"></div>
@@ -120,18 +118,8 @@
     </div>
 </div>
 
-<!-- MENÚ INFERIOR (SIN BOTÓN SALIR) -->
-<nav class="bottom-nav">
-    <a href="../dashboard/" class="nav-item">
-        <span class="icon">📊</span><span class="text">Dashboard</span>
-    </a>
-    <a href="../transacciones/" class="nav-item active">
-        <span class="icon">📝</span><span class="text">Movimientos</span>
-    </a>
-    <a href="../ajustes/" class="nav-item">
-        <span class="icon">⚙️</span><span class="text">Ajustes</span>
-    </a>
-</nav>
+<!-- Menú renderizado por JS -->
+<nav class="bottom-nav" id="bottom-nav"></nav>
 
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/transacciones.js"></script>

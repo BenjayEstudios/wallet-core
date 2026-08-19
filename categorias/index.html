@@ -4,31 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Categorías - Mis Finanzas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 <div class="container">
     <div style="display:flex; align-items:center; gap: 15px; margin-bottom: 20px;">
         <button onclick="window.location.href='../ajustes/'" style="background:transparent; border:none; color:var(--texto-secundario); font-size:1.5rem; cursor:pointer;">←</button>
-        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--texto-principal); margin: 0;">Categorías</h2>
+        <h2 class="page-title">Categorías</h2>
     </div>
 
-    <div id="lista-categorias" style="display:flex; flex-direction:column; gap:10px;">
-        <!-- Renderizadas por JS -->
-    </div>
+    <div id="lista-categorias" style="display:flex; flex-direction:column; gap:10px;"></div>
 </div>
 
-<button class="fab" onclick="abrirModalCategoria()">+</button>
+<button class="fab" onclick="abrirModalCategoria()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+</button>
 
-<!-- MODAL CATEGORÍA -->
+<!-- MODAL CATEGORÍA CON LIVE PREVIEW -->
 <div class="overlay" id="modalCategoria" onclick="cerrarModal(event, 'modalCategoria')">
     <div class="modal">
         <div class="mod-handle"></div>
-        <div class="mod-title" id="titulo-modal-cat" style="text-align: center; margin-bottom: 10px;">Nueva Categoría</div>
+        <div class="mod-title" id="titulo-modal-cat" style="text-align: center;">Nueva Categoría</div>
+        
+        <!-- CAJA DE LIVE PREVIEW -->
+        <div style="display:flex; justify-content:center; margin: 15px 0 20px 0;">
+            <div style="display:flex; align-items:center; gap:12px; padding: 12px 20px; border-radius: 16px; background: var(--surface-elevated); border: 1px solid var(--borde);">
+                <span id="preview-icon" style="font-size: 1.8rem; background: var(--surface); padding:8px; border-radius:10px; border:1px solid var(--borde);">🏷️</span>
+                <span id="preview-badge" class="badge" style="background-color: rgba(74, 85, 104, 0.2); color: #A0ABC0; font-size: 0.85rem;">Nombre Categoría</span>
+            </div>
+        </div>
+
         <input type="hidden" id="cat-id">
         
-        <div class="form-group" style="margin-top: 15px;">
+        <div class="form-group">
             <label>Nombre de la Categoría</label>
             <input type="text" class="form-control" id="cat-nombre" placeholder="Ej. Gimnasio, Mascotas...">
         </div>
@@ -58,17 +67,7 @@
     </div>
 </div>
 
-<nav class="bottom-nav">
-    <a href="../dashboard/" class="nav-item">
-        <span class="icon">📊</span><span class="text">Dashboard</span>
-    </a>
-    <a href="../transacciones/" class="nav-item">
-        <span class="icon">📝</span><span class="text">Movimientos</span>
-    </a>
-    <a href="../ajustes/" class="nav-item active">
-        <span class="icon">⚙️</span><span class="text">Ajustes</span>
-    </a>
-</nav>
+<nav class="bottom-nav" id="bottom-nav"></nav>
 
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/categorias.js"></script>
